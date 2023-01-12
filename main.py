@@ -1,12 +1,21 @@
 from kivy.app import App
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.widget import Widget
 from kivy.properties import (
     NumericProperty, ReferenceListProperty, ObjectProperty
 )
 from kivy.vector import Vector
 from kivy.clock import Clock
+import os
+from kivy.resources import resource_add_path, resource_find
 
+resource_add_path(os.path.abspath('res/fonts/'))
+from kivy.core.text import LabelBase
 
+LabelBase.register('Roboto', 'PingFangSC-Thin.otf')
+
+'''
 class PongPaddle(Widget):
     score = NumericProperty(0)
 
@@ -69,7 +78,24 @@ class PongApp(App):
         game.serve_ball()
         Clock.schedule_interval(game.update, 1.0 / 60.0)
         return game
+'''
+
+
+class WindowManager(ScreenManager):
+    pass
+
+
+main = WindowManager()
+kv=Builder.load_file('main.kv')
+
+class MainActivity():
+    ball = ObjectProperty(None)
+
+
+class JMCLApp(App):
+    def build(self):
+        return main
 
 
 if __name__ == '__main__':
-    PongApp().run()
+    JMCLApp().run()
